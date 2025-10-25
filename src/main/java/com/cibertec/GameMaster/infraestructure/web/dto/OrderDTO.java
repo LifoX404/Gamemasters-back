@@ -36,4 +36,6 @@ public class OrderDTO {
     private Boolean status;
 
     private List<OrderItemDTO> orderItems;
+
+    private CustomerDTO customer;
 }
