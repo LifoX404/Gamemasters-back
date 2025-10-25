@@ -5,6 +5,7 @@ import com.cibertec.GameMaster.infraestructure.mapper.OrderItemMapper;
 import com.cibertec.GameMaster.infraestructure.mapper.OrderMapper;
 import com.cibertec.GameMaster.infraestructure.web.dto.OrderDTO;
 import com.cibertec.GameMaster.infraestructure.web.dto.export.FilterRequest;
+import com.cibertec.GameMaster.infraestructure.web.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,11 @@ public class OrderService {
                     return orderDTO;
                 })
                 .toList();
+    }
+
+    public OrderDTO getOrder(Long orderId){
+        return orderMapper.toDTO(orderPort.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId)));
     }
 
 

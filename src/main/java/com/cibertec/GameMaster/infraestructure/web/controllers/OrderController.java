@@ -7,6 +7,7 @@ import com.cibertec.GameMaster.infraestructure.web.dto.export.FilterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,17 @@ public class OrderController {
                 ApiResponse.builder()
                         .message("Ordenes listadas Correctamente")
                         .data(orders)
+                        .build()
+        );
+    }
+
+    @GetMapping("/get/{orderId}")
+    public ResponseEntity<?> getOrder(@PathVariable Long orderId) {
+        OrderDTO order = service.getOrder(orderId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                ApiResponse.builder()
+                        .message("Ordenes listadas Correctamente")
+                        .data(order)
                         .build()
         );
     }
