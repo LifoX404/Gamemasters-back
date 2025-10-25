@@ -1,11 +1,13 @@
 package com.cibertec.GameMaster.infraestructure.web.dto.auth;
 
+import com.cibertec.GameMaster.infraestructure.database.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"username", "message", "status", "jwt"})
+@JsonPropertyOrder({"username", "roleType", "customerId", "jwt", })
 public record AuthResponse(
         String username,
-        String message,
-        String jwt,
-        Boolean status) {
+        RoleType roleType,
+        Long customerId,
+        String jwt
+) {
 }

@@ -13,12 +13,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/customer")
 public class UserController{
 
-    @Autowired
-    private CustomerService service;
-
-    @GetMapping("/get/{id}")
-    public CustomerDTO getCustomerById(@PathVariable Long id){
-        return service.getCustomerById(id);
-    }
 
 }

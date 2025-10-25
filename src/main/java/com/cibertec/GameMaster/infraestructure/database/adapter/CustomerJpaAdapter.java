@@ -20,6 +20,11 @@ public class CustomerJpaAdapter implements CustomerPort {
     }
 
     @Override
+    public Customer getCustomerByUserId(Long id) {
+        return repository.findByUser_Id(id);
+    }
+
+    @Override
     public Optional<Customer> findById(Long id) {
         return repository.findById(id);
     }

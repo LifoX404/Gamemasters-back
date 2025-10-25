@@ -8,6 +8,8 @@ public interface CustomerPort{
 
     void save(Customer customer);
 
+    Customer getCustomerByUserId(Long id);
+
     Optional<Customer> findById(Long id);
 
     boolean logicDelete(Long id);

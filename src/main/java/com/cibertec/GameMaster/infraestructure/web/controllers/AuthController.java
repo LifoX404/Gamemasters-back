@@ -24,7 +24,7 @@ public class AuthController {
         AuthResponse response = authService.loginValidate(request);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                 ApiResponse.builder()
-                        .message("Login successful")
+                        .message("User Logged successfully")
                         .data(response)
                         .build()
         );
@@ -36,17 +36,6 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                 ApiResponse.builder()
                         .message("Register successful")
-                        .data(response)
-                        .build()
-        );
-    }
-
-    @GetMapping("/get/{username}")
-    public ResponseEntity<?> getRole(@PathVariable String username){
-        RoleType response = authService.getRole(username);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
-                ApiResponse.builder()
-                        .message("Usuario obtenido")
                         .data(response)
                         .build()
         );

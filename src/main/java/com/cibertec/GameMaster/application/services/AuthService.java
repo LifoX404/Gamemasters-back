@@ -12,6 +12,7 @@ import com.cibertec.GameMaster.infraestructure.web.dto.auth.AuthResponse;
 import com.cibertec.GameMaster.infraestructure.web.dto.auth.LoginRequest;
 import com.cibertec.GameMaster.infraestructure.web.dto.auth.RegisterRequest;
 import com.cibertec.GameMaster.infraestructure.web.exception.BadRequestException;
+import com.cibertec.GameMaster.infraestructure.web.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,19 +45,33 @@ public class AuthService {
     @Autowired
     private UserMapper mapper;
 
-
     public AuthResponse loginValidate(LoginRequest login) {
         String username = login.username();
         String password = login.password();
+
+        UserEntity user = userPort.getUserByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Username", username));
+
+        Long customerId = null;
+
+        // Validar que el rol no sea nulo antes de comparar
+        if (user.getRole() != null && user.getRole() == RoleType.CUSTOMER) {
+            Customer customer = customerPort.getCustomerByUserId(user.getId());
+            if (customer != null) {
+                customerId = customer.getId();
+            }
+        }
 
         Authentication authentication = security.authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.createToken(authentication);
-        return new AuthResponse(username,
-                "User logged successfully",
-                accessToken,
-                true);
+
+        return new AuthResponse(
+                username,
+                user.getRole(),
+                customerId,
+                accessToken);
     }
 
     public AuthResponse createCustomer(RegisterRequest request){
@@ -100,14 +115,10 @@ public class AuthService {
 
         return new AuthResponse(
                 request.username(),
-                "Customer created successfully",
-                accessToken,
-                true
+                null,
+                null,
+                 accessToken
         );
-    }
-
-    public RoleType getRole(String username){
-        return mapper.toDTO(userPort.getUserByUsername(username).orElseThrow()).getRole();
     }
 
 }
