@@ -27,4 +27,8 @@ public class ProductDto {
 
     private Boolean status;
 
+    private Long categoryId;
+
+    private String categoryName;
+
 }

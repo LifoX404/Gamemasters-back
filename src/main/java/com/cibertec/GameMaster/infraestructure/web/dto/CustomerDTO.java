@@ -23,4 +23,6 @@ public class CustomerDTO {
     private String address;
 
     private LocalDateTime createdAt;
+
+    private Boolean status;
 }

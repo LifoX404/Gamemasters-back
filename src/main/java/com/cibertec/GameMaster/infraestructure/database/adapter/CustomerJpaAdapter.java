@@ -6,6 +6,7 @@ import com.cibertec.GameMaster.infraestructure.database.repository.CustomerRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,6 +14,16 @@ public class CustomerJpaAdapter implements CustomerPort {
 
     @Autowired
     private CustomerRepository repository;
+
+    @Override
+    public List<Customer> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Customer> findAllActive() {
+        return repository.findAllActive();
+    }
 
     @Override
     public void save(Customer customer) {
@@ -30,8 +41,8 @@ public class CustomerJpaAdapter implements CustomerPort {
     }
 
     @Override
-    public boolean logicDelete(Long id) {
-        return repository.setStatusFalse(id);
+    public void logicDelete(Long id) {
+        repository.setStatusFalse(id);
     }
 
     @Override

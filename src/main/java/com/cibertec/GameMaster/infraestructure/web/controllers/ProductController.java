@@ -21,7 +21,7 @@ public class ProductController {
     @GetMapping("/get")
     public ResponseEntity<?> getProducts() {
         List<ProductDto> response = productService.getProducts();
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 ApiResponse.builder()
                         .message("Orden Procesada Correctamente")
                         .data(response)
@@ -32,7 +32,7 @@ public class ProductController {
     @GetMapping("/get/{id}")
     public ResponseEntity<?> getProduct(@PathVariable Long id) {
         ProductDto response = productService.getProductById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.status(HttpStatus.OK).body(
                 ApiResponse.builder()
                         .message("Orden Procesada Correctamente")
                         .data(response)
@@ -68,7 +68,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
                 ApiResponse.builder()
                         .message("Producto "+id+ " eliminado correctamente")
-                        .data(null)
+                        .data(true)
                         .build()
         );
     }

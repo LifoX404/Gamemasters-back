@@ -6,13 +6,15 @@ import com.cibertec.GameMaster.infraestructure.database.repository.CategoryRepos
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class CategoryJpaAdapter implements CategoryPort {
+public class CategoryAdapter implements CategoryPort {
 
     @Autowired
     private CategoryRepository repository;
+
 
     @Override
     public void save(Category customer) {
@@ -24,13 +26,13 @@ public class CategoryJpaAdapter implements CategoryPort {
         return repository.findById(id);
     }
 
-//    @Override
-//    public boolean logicDelete(UUID id) {
-//        return repository.setStatusFalse(id);
-//    }
+    @Override
+    public List<Category> findAll() {
+        return repository.findAll();
+    }
 
     @Override
     public boolean existById(Long id) {
-        return repository.existsById(id);
+        return false;
     }
 }
