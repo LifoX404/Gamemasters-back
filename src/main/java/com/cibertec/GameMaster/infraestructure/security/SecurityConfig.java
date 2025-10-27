@@ -57,8 +57,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
-                    // NOTA: Completa estos endpoints según tus necesidades
                     auth.requestMatchers("/api/auth/**").permitAll();
+                    auth.requestMatchers("/api/product/get/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .addFilterBefore(new JwtFilter(jwtUtils), BasicAuthenticationFilter.class)
